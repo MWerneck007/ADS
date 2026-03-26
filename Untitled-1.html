@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Discente - Marcelo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #3b82f6;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <main class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden p-8 md:p-12">
+        <section class="flex flex-col items-center text-center">
+            
+            <!-- Foto de Perfil Atualizada -->
+            <div class="mb-8">
+                <img 
+                    src="https://media-gru2-1.cdn.whatsapp.net/v/t61.24694-24/626479985_1653180852715872_3280374944653069693_n.jpg?ccb=11-4&oh=01_Q5Aa4AHEWfHFJ-DAdBylrwPK3yLw2Jg3Yqh5t-K_mfhDQReKZg&oe=69D170CA&_nc_sid=5e03e0&_nc_cat=107" 
+                    alt="Foto do Marcelo" 
+                    class="profile-image"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Marcelo&size=200&background=3b82f6&color=fff'"
+                >
+            </div>
+
+            <!-- Título Principal -->
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-2">
+                Marcelo
+            </h1>
+
+            <!-- Subtítulo -->
+            <h2 class="text-xl font-semibold text-blue-600 uppercase tracking-wide mb-8">
+                Biografia
+            </h2>
+
+            <!-- Conteúdo da Biografia -->
+            <div class="space-y-6 text-left">
+                <p class="text-lg leading-relaxed text-slate-700">
+                    Olá! Eu sou o Marcelo, um entusiasta da tecnologia que busca constantemente aprender coisas novas. Minha jornada pessoal é marcada pela curiosidade em entender como o mundo funciona através da lógica e da inovação.
+                </p>
+
+                <p class="text-lg leading-relaxed text-slate-700">
+                    Escolhi o curso de Análise e Desenvolvimento de Sistemas (ADS) porque acredito que a programação é a ferramenta mais poderosa para resolver problemas reais da sociedade. Além disso, a versatilidade do mercado de tecnologia e a possibilidade de criar soluções do zero me motivam a evoluir como profissional nesta área.
+                </p>
+            </div>
+
+            <!-- Rodapé decorativo -->
+            <div class="mt-10 pt-6 border-t border-slate-100 w-full text-slate-400 text-sm italic">
+                Página desenvolvida para a disciplina de Desenvolvimento Web.
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
