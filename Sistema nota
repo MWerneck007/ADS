@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Média Semestral - Fasipe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            flex-grow: 1;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center text-blue-800 mb-8">Simulador de média semestral</h1>
+        
+        <form id="formMedia" class="space-y-6">
+            <!-- NOTA N1 -->
+            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                <h2 class="font-bold text-lg mb-3">Nota N1</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Atividade 1 (0-10)</label>
+                        <input type="number" id="atv1" step="0.1" min="0" max="10" placeholder="Ex: 8.5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Prova 1 (0-10)</label>
+                        <input type="number" id="prova1" step="0.1" min="0" max="10" placeholder="Ex: 7.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTA N2 -->
+            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                <h2 class="font-bold text-lg mb-3">Nota N2</h2>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Prova Integrada (0-10)</label>
+                    <input type="number" id="provaInt" step="0.1" min="0" max="10" placeholder="Ex: 9.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+            </div>
+
+            <!-- NOTA N3 -->
+            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                <h2 class="font-bold text-lg mb-3">Nota N3</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Atividade 2 (0-10)</label>
+                        <input type="number" id="atv2" step="0.1" min="0" max="10" placeholder="Ex: 10.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Prova 2 (0-10)</label>
+                        <input type="number" id="prova2" step="0.1" min="0" max="10" placeholder="Ex: 6.5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" onclick="calcularMedia()" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200">
+                Calcular
+            </button>
+        </form>
+
+        <div id="resultado" class="mt-8 p-6 rounded-lg hidden text-center">
+            <!-- Resultado será inserido aqui via JS -->
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
+        <p>Desenvolvido por [Marcelo Werneck Bonfim da Silva]</p>
+    </footer>
+
+    <script>
+        function calcularMedia() {
+            // Obter referências dos campos
+            const atv1 = parseFloat(document.getElementById('atv1').value);
+            const prova1 = parseFloat(document.getElementById('prova1').value);
+            const n2 = parseFloat(document.getElementById('provaInt').value);
+            const atv2 = parseFloat(document.getElementById('atv2').value);
+            const prova2 = parseFloat(document.getElementById('prova2').value);
+            
+            const divResultado = document.getElementById('resultado');
+
+            // Validação de campos vazios e valores entre 0 e 10
+            const notas = [atv1, prova1, n2, atv2, prova2];
+            const camposPreenchidos = notas.every(nota => !isNaN(nota));
+            const valoresValidos = notas.every(nota => nota >= 0 && nota <= 10);
+
+            if (!camposPreenchidos || !valoresValidos) {
+                divResultado.innerHTML = `
+                    <div class="bg-red-100 text-red-700 p-4 rounded border border-red-400">
+                        Por favor, preencha todos os campos com valores entre 0 e 10.
+                    </div>
+                `;
+                divResultado.classList.remove('hidden');
+                return;
+            }
+
+            // Cálculos conforme regras
+            const n1 = (atv1 + prova1) / 2;
+            const n3 = (atv2 + prova2) / 2;
+            const mediaSemestral = (n1 + n2 + n3) / 3;
+
+            // Lógica de aprovação
+            let status = "";
+            let classeCor = "";
+            
+            if (mediaSemestral >= 7.0) {
+                status = "Aprovado";
+                classeCor = "bg-green-100 text-green-800 border-green-400";
+            } else {
+                status = "Reprovado";
+                classeCor = "bg-red-100 text-red-800 border-red-400";
+            }
+
+            // Exibição via innerHTML conforme solicitado
+            divResultado.className = `mt-8 p-6 rounded-lg border-2 ${classeCor}`;
+            divResultado.innerHTML = `
+                <h3 class="text-xl font-bold mb-2">Resultado Final</h3>
+                <p class="text-lg">Média Semestral: <strong>${mediaSemestral.toFixed(2)}</strong></p>
+                <p class="text-2xl font-black mt-2 uppercase">${status}</p>
+            `;
+            divResultado.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
